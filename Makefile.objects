@@ -1,0 +1,8 @@
+php_gearman.lo: /root/sources/gearman-1.1.2/php_gearman.c
+	$(LIBTOOL) --mode=compile $(CC)  -I. -I/root/sources/gearman-1.1.2 $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS)  -c /root/sources/gearman-1.1.2/php_gearman.c -o php_gearman.lo 
+$(phplibdir)/gearman.la: ./gearman.la
+	$(LIBTOOL) --mode=install cp ./gearman.la $(phplibdir)
+
+./gearman.la: $(shared_objects_gearman) $(GEARMAN_SHARED_DEPENDENCIES)
+	$(LIBTOOL) --mode=link $(CC) $(COMMON_FLAGS) $(CFLAGS_CLEAN) $(EXTRA_CFLAGS) $(LDFLAGS) -o $@ -export-dynamic -avoid-version -prefer-pic -module -rpath $(phplibdir) $(EXTRA_LDFLAGS) $(shared_objects_gearman) $(GEARMAN_SHARED_LIBADD)
+
